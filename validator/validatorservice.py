@@ -5,6 +5,7 @@ MAX_SIGNIFICAND32_VALUE = 8388607
 MAX_EXP64_VALUE = 2047
 OPERATIONS = ('+', '-', '/')
 
+
 class ValidatorService:
     @staticmethod
     def is_bin32_num_valid(bin32_num):
@@ -72,6 +73,7 @@ class ValidatorService:
             return True
         else:
             return False
+
 
 def _is_int(num):
     try:
