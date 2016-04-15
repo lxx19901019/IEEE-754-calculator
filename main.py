@@ -14,22 +14,24 @@ CHOOSE_FORMAT = 'Choose a format of numbers for calculation: (1)binary32 or (2)b
 CHOOSE_REPR = 'Choose a representation of numbers: ' \
                  '(1)Binary or ' \
                  '(2)Anyfloat(sign=<0,1>,exponent=<[0;2^8-1]>/<[0;2^11-1]>,significand=<[0;2^23-1]>/<[0;2^52-1]>):'
-INPUT_NUMBER = 'Input number-{0}:'
-INPUT_OPERATION = 'Input operation(+, *, /):'
 
 
 def input_processer():
-    f = consoleservice.ConsoleService.ask_format_or_repr(CHOOSE_FORMAT)
-    r = consoleservice.ConsoleService.ask_format_or_repr(CHOOSE_REPR)
-    fst_num = consoleservice.ConsoleService.ask_num(INPUT_NUMBER.format('1'))
-    snd_num = consoleservice.ConsoleService.ask_num(INPUT_NUMBER.format('2'))
-    op = consoleservice.ConsoleService.ask_operation(INPUT_OPERATION)
-    if f == 1:
-        bin32calc = binary32calc.Binary32Calc(fst_num, snd_num, r, op)
-        bin32calc.calculate()
-    elif f == 2:
-        bin64calc = binary64calc.Binary64Calc(fst_num, snd_num, r, op)
-        bin64calc.calculate()
+    # f = consoleservice.ConsoleService.ask_format_or_repr(CHOOSE_FORMAT)
+    # r = consoleservice.ConsoleService.ask_format_or_repr(CHOOSE_REPR)
+    # if r == 1:
+    #     fst_num = consoleservice.ConsoleService.ask_bin32_num_in_bin_repr(INPUT_NUMBER.format('1'))
+    # fst_num = consoleservice.ConsoleService.ask_num(INPUT_NUMBER.format('1'))
+    # snd_num = consoleservice.ConsoleService.ask_num(INPUT_NUMBER.format('2'))
+    # op = consoleservice.ConsoleService.ask_operation(INPUT_OPERATION)
+    # if f == 1:
+    #     bin32calc = binary32calc.Binary32Calc(fst_num, snd_num, r, op)
+    #     bin32calc.calculate()
+    # elif f == 2:
+    #     bin64calc = binary64calc.Binary64Calc(fst_num, snd_num, r, op)
+    #     bin64calc.calculate()
+
+    print(anyfloat.AnyFloat._decode())
 
 
 def main():
@@ -42,6 +44,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-

@@ -44,4 +44,3 @@ class Calculator:
 
     def _div(self):
         return self.lhs / self.rhs
-

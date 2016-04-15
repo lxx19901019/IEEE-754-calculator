@@ -28,12 +28,6 @@ class ConsoleService:
             return num
 
     @staticmethod
-    def ask_operation(msg):
-        while (True):
-            op = ConsoleService.ask_message(msg)
-            return op
-
-    @staticmethod
     def ask_bin32_num_in_bin_repr(msg):
         while (True):
             bin32_num = ConsoleService.ask_message(msg)
