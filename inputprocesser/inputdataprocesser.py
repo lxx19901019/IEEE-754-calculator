@@ -13,6 +13,8 @@ INPUT_OPERATION = 'Input operation(+, *, /):'
 INPUT_SIGN_NUM = 'Input "1" if sign is "+" and "0" if sign is "-"'
 INPUT_EXPONENT32 = 'Input exponent for 32 binary anyfloat number'
 INPUT_SIGNIFICAND32 = 'Input significand for 32 binary anyfloat number'
+INPUT_EXPONENT64 = 'Input exponent for 64 binary anyfloat number'
+INPUT_SIGNIFICAND64 = 'Input significand for 64 binary anyfloat number'
 
 
 class InputProcesser:
@@ -40,13 +42,20 @@ class InputProcesser:
         if self.number_format == BINARY32_FORMAT:
             self._binary32_processer()
         elif self.number_format == BINARY64_FORMAT:
-            self._anyfloat_processer()
+            self._binary64_processer()
 
     def _binary32_processer(self):
         if self.number_repr == BINARY_REPR:
             self.__binary_bin32_processer()
         elif self.number_repr == ANYFLOAT_REPR:
             self.__anyfloat_bin32_processer()
+        pass
+
+    def _binary64_processer(self):
+        if self.number_repr == BINARY_REPR:
+            self.__binary_bin64_processer()
+        elif self.number_repr == ANYFLOAT_REPR:
+            self.__anyfloat_bin64_processer()
         pass
 
     def __binary_bin32_processer(self):
@@ -56,27 +65,19 @@ class InputProcesser:
         bin32_calc = binary32calc.Binary32Calc(fst_num, snd_num, self.number_repr, op)
 
     def __anyfloat_bin32_processer(self):
-        AnyFloat_Num = ()
-        fst_num = ()
-        #snd_num
-        for i in range(1, 3):
-            consoleservice.ConsoleService.print_message(INPUT_NUMBER.format(str(i)))
-            sign = consoleservice.ConsoleService.ask_sign_num(INPUT_SIGN_NUM)
-            exp32 = consoleservice.ConsoleService.ask_exp32_num(INPUT_EXPONENT32)
-            signif32 = consoleservice.ConsoleService.ask_signif32_num(INPUT_SIGNIFICAND32)
+        fst_num = consoleservice.ConsoleService.ask_anyfloat32_num(INPUT_SIGN_NUM, INPUT_EXPONENT32, INPUT_EXPONENT32)
+        snd_num = consoleservice.ConsoleService.ask_anyfloat32_num(INPUT_SIGN_NUM, INPUT_EXPONENT32, INPUT_EXPONENT32)
         op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
         bin32_calc = binary32calc.Binary32Calc(fst_num, snd_num, self.number_repr, op)
-        pass
-
-    def _anyfloat_processer(self):
-        if self.number_repr == BINARY_REPR:
-            self.__binary_bin64_processer()
-        elif self.number_repr == ANYFLOAT_REPR:
-            self.__anyfloat_bin64_processer()
-        pass
 
     def __binary_bin64_processer(self):
-        pass
+        fst_num = consoleservice.ConsoleService.ask_bin64_num_in_bin_repr(INPUT_NUMBER.format('1'))
+        snd_num = consoleservice.ConsoleService.ask_bin64_num_in_bin_repr(INPUT_NUMBER.format('2'))
+        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
+        bin64_calc = binary64calc.Binary64Calc(fst_num, snd_num, self.number_repr, op)
 
     def __anyfloat_bin64_processer(self):
-        pass
+        fst_num = consoleservice.ConsoleService.ask_anyfloat64_num(INPUT_SIGN_NUM, INPUT_EXPONENT64, INPUT_EXPONENT64)
+        snd_num = consoleservice.ConsoleService.ask_anyfloat64_num(INPUT_SIGN_NUM, INPUT_EXPONENT64, INPUT_EXPONENT64)
+        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
+        bin32_calc = binary64calc.Binary64Calc(fst_num, snd_num, self.number_repr, op)
