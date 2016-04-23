@@ -1,9 +1,11 @@
 LEN_BIN32 = 32
 LEN_BIN64 = 64
 MAX_EXP32_VALUE = 255
+MAX_SHORT_EXP32_VALUE = 127
+MIN_SHORT_EXP32_VALUE = -128
 MAX_SIGNIFICAND32_VALUE = 8388607
 MAX_EXP64_VALUE = 2047
-OPERATIONS = ('+', '-', '/')
+OPERATIONS = ('+', '*', '/')
 
 
 class ValidatorService:
@@ -31,7 +33,8 @@ class ValidatorService:
     @staticmethod
     def is_exp32_num_valid(exp32_num):
         if _is_int(exp32_num):
-            if int(exp32_num) >= 0 and int(exp32_num) <= MAX_EXP32_VALUE:
+            if int(exp32_num) >= 0 and int(exp32_num) <= MAX_EXP32_VALUE or \
+                            int(exp32_num) >= MIN_SHORT_EXP32_VALUE and int(exp32_num) <= MAX_SHORT_EXP32_VALUE:
                 return True
             else:
                 return False
