@@ -6,6 +6,7 @@ BINARY32_FORMAT = 1
 BINARY_REPR = 1
 BINARY64_FORMAT = 2
 ANYFLOAT_REPR = 2
+HEX_REPR = 3
 
 
 INPUT_NUMBER = 'Input number-{0}:'
@@ -53,6 +54,9 @@ class InputProcesser:
         elif self.number_repr == ANYFLOAT_REPR:
             res = self.__anyfloat_bin32_processer()
             return res
+        elif self.number_repr == HEX_REPR:
+            res = self.__hex_bin32_processer()
+            return res
 
     def _binary64_processer(self):
         if self.number_repr == BINARY_REPR:
@@ -60,6 +64,9 @@ class InputProcesser:
             return res
         elif self.number_repr == ANYFLOAT_REPR:
             res = self.__anyfloat_bin64_processer()
+            return res
+        elif self.number_repr == HEX_REPR:
+            res = self.__hex_bin64_processer()
             return res
 
     def __binary_bin32_processer(self):
@@ -80,6 +87,14 @@ class InputProcesser:
         res = bin32_calc.calculate()
         return res
 
+    def __hex_bin32_processer(self):
+        fst_num = consoleservice.ConsoleService.ask_hex32_num(INPUT_NUMBER.format('1'))
+        snd_num = consoleservice.ConsoleService.ask_hex32_num(INPUT_NUMBER.format('2'))
+        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
+        bin32_calc = binary32calc.Binary32Calc(fst_num, snd_num, self.number_repr, op)
+        res = bin32_calc.calculate()
+        return res
+
     def __binary_bin64_processer(self):
         fst_num = consoleservice.ConsoleService.ask_bin64_num_in_bin_repr(INPUT_NUMBER.format('1'))
         snd_num = consoleservice.ConsoleService.ask_bin64_num_in_bin_repr(INPUT_NUMBER.format('2'))
@@ -93,6 +108,14 @@ class InputProcesser:
         fst_num = consoleservice.ConsoleService.ask_anyfloat64_num(INPUT_SIGN_NUM, INPUT_EXPONENT64, INPUT_SIGNIFICAND64)
         consoleservice.ConsoleService.print_message(INPUT_NUMBER.format('2')[:-1])
         snd_num = consoleservice.ConsoleService.ask_anyfloat64_num(INPUT_SIGN_NUM, INPUT_EXPONENT64, INPUT_SIGNIFICAND64)
+        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
+        bin64_calc = binary64calc.Binary64Calc(fst_num, snd_num, self.number_repr, op)
+        res = bin64_calc.calculate()
+        return res
+
+    def __hex_bin64_processer(self):
+        fst_num = consoleservice.ConsoleService.ask_hex64_num(INPUT_NUMBER.format('1'))
+        snd_num = consoleservice.ConsoleService.ask_hex64_num(INPUT_NUMBER.format('2'))
         op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
         bin64_calc = binary64calc.Binary64Calc(fst_num, snd_num, self.number_repr, op)
         res = bin64_calc.calculate()

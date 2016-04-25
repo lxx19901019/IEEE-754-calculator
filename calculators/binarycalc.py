@@ -46,6 +46,8 @@ class BinaryCalc:
             res = self._binary_calculator()
         elif self.rep_num == 2:
             res = self._anyfloat_calculator()
+        elif self.rep_num == 3:
+            res = self._hex_calculator()
         return res
 
     @abstractclassmethod
@@ -54,4 +56,8 @@ class BinaryCalc:
 
     @abstractclassmethod
     def _anyfloat_calculator(self):
+        pass
+
+    @abstractclassmethod
+    def _hex_calculator(self):
         pass

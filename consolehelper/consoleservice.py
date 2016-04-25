@@ -16,11 +16,22 @@ class ConsoleService:
             raise RuntimeError
 
     @staticmethod
-    def ask_format_or_repr(msg):
+    def ask_format(msg):
         while (True):
             s = ConsoleService.ask_message(msg)
-            if int(s) == 1 or int(s) == 2:
+            if validatorservice.ValidatorService.is_format_valid(s):
                 return int(s)
+            else:
+                ConsoleService.print_message('Invalid format num!')
+
+    @staticmethod
+    def ask_repr(msg):
+        while (True):
+            s = ConsoleService.ask_message(msg)
+            if validatorservice.ValidatorService.is_repr_valid(s):
+                return int(s)
+            else:
+                ConsoleService.print_message('Invalid representation num!')
 
     @staticmethod
     def ask_bin32_num_in_bin_repr(msg):
@@ -109,3 +120,30 @@ class ConsoleService:
                 return operator
             else:
                 ConsoleService.print_message('Invalid operator!')
+
+    @staticmethod
+    def ask_precision(msg):
+        while (True):
+            prec = ConsoleService.ask_message(msg)
+            if validatorservice.ValidatorService.is_precision_valid(prec):
+                return prec
+            else:
+                ConsoleService.print_message('Invalid precision!')
+
+    @staticmethod
+    def ask_hex32_num(msg):
+        while (True):
+            hex32_num = ConsoleService.ask_message(msg)
+            if validatorservice.ValidatorService.is_hex_number_bin32_valid(hex32_num):
+                return hex32_num
+            else:
+                ConsoleService.print_message('Invalid hex32 num!')
+
+    @staticmethod
+    def ask_hex64_num(msg):
+        while (True):
+            hex64_num = ConsoleService.ask_message(msg)
+            if validatorservice.ValidatorService.is_hex_number_bin64_valid(hex64_num):
+                return hex64_num
+            else:
+                ConsoleService.print_message('Invalid hex64 num!')
