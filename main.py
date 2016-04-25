@@ -17,11 +17,14 @@ CHOOSE_REPR = 'Choose a representation of numbers:\n' \
 
 
 def main():
-    f = consoleservice.ConsoleService.ask_format(CHOOSE_FORMAT)
-    r = consoleservice.ConsoleService.ask_repr(CHOOSE_REPR)
-    in_proc = inputdataprocesser.InputProcesser(f, r)
-    out_proc = outputdataprocesser.OutputProcesser(in_proc.process())
-    out_proc.process()
+    try:
+        f = consoleservice.ConsoleService.ask_format(CHOOSE_FORMAT)
+        r = consoleservice.ConsoleService.ask_repr(CHOOSE_REPR)
+        in_proc = inputdataprocesser.InputProcesser(f, r)
+        out_proc = outputdataprocesser.OutputProcesser(in_proc.process())
+        out_proc.process()
+    except:
+        consoleservice.ConsoleService.print_message('\nBye!')
 
 
 def test():
