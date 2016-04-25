@@ -73,6 +73,7 @@ class ValidatorService:
     def is_hex_number_bin64_valid(hex_num):
         return len(hex_num) == 16 and re.match('[0-9a-fA-F]+', hex_num)
 
+
 def _is_int(num):
     try:
         int(num)
