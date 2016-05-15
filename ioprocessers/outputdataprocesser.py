@@ -1,31 +1,44 @@
 from consolehelper import consoleservice
-from floatprocesser import anyfloat
-
-
-SINGLE_PRECISION_HEX_FORMAT = 'num in single precision, in hex format: {0}'
-SINGLE_PRECISION_FLOAT_FORMAT = 'num in single precision, in float format: {0}'
-DOUBLE_PRECISION_HEX_FORMAT = 'num in double precision, in hex format: {0}'
-DOUBLE_PRECISION_FLOAT_FORMAT = 'num in double precision, in float format: {0}'
-SINGLE_PRECISION = (8, 23)
-SINGLE = '1'
-DOUBLE = '2'
+from softfloat import bits32tofloat, bits64tohex, bits64tofloat
+from ioprocessers import inputdataprocesser
 
 
 class OutputProcesser:
-    def __init__(self, res):
+    def __init__(self, res, exception_code, number_format):
         self.__res = res
+        self.__exception_code = exception_code
+        self.__number_format = number_format
 
     @property
     def res(self):
         return self.__res
 
+    @property
+    def exception_code(self):
+        return self.__exception_code
+
+    @property
+    def number_format(self):
+        return self.__number_format
+
     @res.setter
     def res(self, res):
         self.__res = res
 
+    @exception_code.setter
+    def exception_code(self, exception_code):
+        self.__exception_code = exception_code
+
+    @number_format.setter
+    def number_format(self, number_format):
+        self.__number_format = number_format
+
     def process(self):
-        consoleservice.ConsoleService.print_message(SINGLE_PRECISION_HEX_FORMAT.format(str(hex(self.res.to_ieee(SINGLE_PRECISION)))))
-        a = anyfloat.AnyFloat.from_ieee(int(str(hex(self.res.to_ieee(SINGLE_PRECISION))), 16), SINGLE_PRECISION)
-        consoleservice.ConsoleService.print_message(SINGLE_PRECISION_FLOAT_FORMAT.format(str(float(a))))
-        consoleservice.ConsoleService.print_message(DOUBLE_PRECISION_HEX_FORMAT.format(str(hex(self.res.to_ieee()))))
-        consoleservice.ConsoleService.print_message(DOUBLE_PRECISION_FLOAT_FORMAT.format(str(float(self.res))))
+        if self.number_format == inputdataprocesser.BINARY32_FORMAT:
+            consoleservice.ConsoleService.print_message('Result in HEX format: ' + hex(self.res))
+            consoleservice.ConsoleService.print_message('Result in Float format: ' + str(bits32tofloat(self.res)))
+            consoleservice.ConsoleService.print_message('Exception mask: ' + bin(self.exception_code))
+        elif self.number_format == inputdataprocesser.BINARY64_FORMAT:
+            consoleservice.ConsoleService.print_message('Result in HEX format: ' + hex(bits64tohex(self.res)))
+            consoleservice.ConsoleService.print_message('Result in Float format: ' + str(bits64tofloat(self.res)))
+            consoleservice.ConsoleService.print_message('Exception mask: ' + bin(self.exception_code))

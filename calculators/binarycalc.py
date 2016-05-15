@@ -2,11 +2,13 @@ from abc import abstractclassmethod
 
 
 class BinaryCalc:
-    def __init__(self, first_num, second_num, rep_num, operation):
+    def __init__(self, first_num, second_num, rep_num, operation, round_mode):
         self.__first_num = first_num
         self.__second_num = second_num
         self.__rep_num = rep_num
         self.__operation = operation
+        self.__round_mode = round_mode
+        self.__exception_code = 0
 
     @property
     def first_num(self):
@@ -24,6 +26,14 @@ class BinaryCalc:
     def operation(self):
         return self.__operation
 
+    @property
+    def round_mode(self):
+        return self.__round_mode
+
+    @property
+    def exception_code(self):
+        return self.__exception_code
+
     @first_num.setter
     def first_num(self, first_num):
         self.__first_num = first_num
@@ -40,22 +50,24 @@ class BinaryCalc:
     def operation(self, operation):
         self.__operation = operation
 
+    @round_mode.setter
+    def round_mode(self, round_mode):
+        self.__round_mode = round_mode
+
+    @exception_code.setter
+    def exception_code(self, exception_code):
+        self.__exception_code = exception_code
+
     def calculate(self):
         res = 0
         if self.rep_num == 1:
-            res = self._binary_calculator()
+            res = self._float_calculator()
         elif self.rep_num == 2:
-            res = self._anyfloat_calculator()
-        elif self.rep_num == 3:
             res = self._hex_calculator()
         return res
 
     @abstractclassmethod
-    def _binary_calculator(self):
-        pass
-
-    @abstractclassmethod
-    def _anyfloat_calculator(self):
+    def _float_calculator(self):
         pass
 
     @abstractclassmethod
