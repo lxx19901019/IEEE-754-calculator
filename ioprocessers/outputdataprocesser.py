@@ -2,6 +2,9 @@ from consolehelper import consoleservice
 from softfloat import bits32tofloat, bits64tohex, bits64tofloat
 from ioprocessers import inputdataprocesser
 
+EXCEPTIONS = ['INEXACT EXCEPTION', 'UNDERFLOW EXCEPTION', 'OVERFLOW EXCEPTION', 'INFINITE EXCEPTION(division by zero)',
+              'INVALID EXCEPTION']
+
 
 class OutputProcesser:
     def __init__(self, res, exception_code, number_format):
@@ -37,8 +40,22 @@ class OutputProcesser:
         if self.number_format == inputdataprocesser.BINARY32_FORMAT:
             consoleservice.ConsoleService.print_message('Result in HEX format: ' + hex(self.res))
             consoleservice.ConsoleService.print_message('Result in Float format: ' + str(bits32tofloat(self.res)))
-            consoleservice.ConsoleService.print_message('Exception mask: ' + bin(self.exception_code))
+            consoleservice.ConsoleService.print_message('Exceptions : ' + self.process_exception_code())
         elif self.number_format == inputdataprocesser.BINARY64_FORMAT:
             consoleservice.ConsoleService.print_message('Result in HEX format: ' + hex(bits64tohex(self.res)))
             consoleservice.ConsoleService.print_message('Result in Float format: ' + str(bits64tofloat(self.res)))
-            consoleservice.ConsoleService.print_message('Exception mask: ' + bin(self.exception_code))
+            consoleservice.ConsoleService.print_message('Exceptions: ' + self.process_exception_code())
+
+    def process_exception_code(self):
+        exceptions = []
+        bin_repr = bin(self.exception_code)
+        code = (bin_repr[2:])
+        while len(code) != 5:
+            code = '0' + code
+        code = code[::-1]
+        for i in range(len(code)):
+            if code[i] == '1':
+                exceptions.append(EXCEPTIONS[i])
+        if len(exceptions) == 0:
+            return 'No exceptions!'
+        return ' & '.join(exceptions)

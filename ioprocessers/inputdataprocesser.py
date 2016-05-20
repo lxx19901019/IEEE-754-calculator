@@ -8,15 +8,14 @@ FLOAT_REPR = 1
 HEX_REPR = 2
 
 
-INPUT_NUMBER = 'Input number-{0}:'
-INPUT_OPERATION = 'Input operation(+, *, /):'
-
-
 class InputProcesser:
-    def __init__(self, number_format, number_repr, round_mode):
+    def __init__(self, number_format, number_repr, round_mode, fst_num, snd_num, operation):
         self.__number_format = number_format
         self.__number_repr = number_repr
         self.__round_mode = round_mode
+        self.__fst_num = fst_num
+        self.__snd_num = snd_num
+        self.__operation = operation
 
     @property
     def number_format(self):
@@ -30,6 +29,18 @@ class InputProcesser:
     def round_mode(self):
         return self.__round_mode
 
+    @property
+    def fst_num(self):
+        return self.__fst_num
+
+    @property
+    def snd_num(self):
+        return self.__snd_num
+
+    @property
+    def operation(self):
+        return self.__operation
+
     @number_format.setter
     def number_format(self, number_format):
         self.__number_format = number_format
@@ -41,6 +52,18 @@ class InputProcesser:
     @round_mode.setter
     def round_mode(self, round_mode):
         self.__round_mode = round_mode
+
+    @fst_num.setter
+    def fst_num(self, fst_num):
+        self.fst_num = fst_num
+
+    @snd_num.setter
+    def snd_num(self, snd_num):
+        self.snd_num = snd_num
+
+    @operation.setter
+    def operation(self, operation):
+        self.__operation = operation
 
     def process(self):
         if self.number_format == BINARY32_FORMAT:
@@ -67,33 +90,25 @@ class InputProcesser:
             return res
 
     def __float_bin32_processer(self):
-        fst_num = consoleservice.ConsoleService.ask_float_num(INPUT_NUMBER.format('1'))
-        snd_num = consoleservice.ConsoleService.ask_float_num(INPUT_NUMBER.format('2'))
-        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
-        bin32_calc = binary32calc.Binary32Calc(fst_num, snd_num, self.number_repr, op, self.round_mode)
+        bin32_calc = binary32calc.Binary32Calc(self.fst_num, self.snd_num, self.number_repr, self.operation,
+                                               self.round_mode)
         res = bin32_calc.calculate()
         return (res, bin32_calc.exception_code)
 
     def __hex_bin32_processer(self):
-        fst_num = consoleservice.ConsoleService.ask_hex32_num(INPUT_NUMBER.format('1'))
-        snd_num = consoleservice.ConsoleService.ask_hex32_num(INPUT_NUMBER.format('2'))
-        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
-        bin32_calc = binary32calc.Binary32Calc(fst_num, snd_num, self.number_repr, op, self.round_mode)
+        bin32_calc = binary32calc.Binary32Calc(self.fst_num, self.snd_num, self.number_repr, self.operation,
+                                               self.round_mode)
         res = bin32_calc.calculate()
         return (res, bin32_calc.exception_code)
 
     def __float_bin64_processer(self):
-        fst_num = consoleservice.ConsoleService.ask_float_num(INPUT_NUMBER.format('1'))
-        snd_num = consoleservice.ConsoleService.ask_float_num(INPUT_NUMBER.format('2'))
-        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
-        bin64_calc = binary64calc.Binary64Calc(fst_num, snd_num, self.number_repr, op, self.round_mode)
+        bin64_calc = binary64calc.Binary64Calc(self.fst_num, self.snd_num, self.number_repr, self.operation,
+                                               self.round_mode)
         res = bin64_calc.calculate()
         return (res, bin64_calc.exception_code)
 
     def __hex_bin64_processer(self):
-        fst_num = consoleservice.ConsoleService.ask_hex64_num(INPUT_NUMBER.format('1'))
-        snd_num = consoleservice.ConsoleService.ask_hex64_num(INPUT_NUMBER.format('2'))
-        op = consoleservice.ConsoleService.ask_operator(INPUT_OPERATION)
-        bin64_calc = binary64calc.Binary64Calc(fst_num, snd_num, self.number_repr, op, self.round_mode)
+        bin64_calc = binary64calc.Binary64Calc(self.fst_num, self.snd_num, self.number_repr, self.operation,
+                                               self.round_mode)
         res = bin64_calc.calculate()
         return (res, bin64_calc.exception_code)
